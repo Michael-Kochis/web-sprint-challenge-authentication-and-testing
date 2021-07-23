@@ -16,11 +16,20 @@ afterAll( async () => {
     await db.destroy()
 })
 
+const input = {
+    username: "Golf",
+    password: "Tango7"
+}
+
 describe("Auth model tests", () => {
     it("[0] Auth model exists", () => {
         expect(auth).toBeDefined();
     })
     it("[1] Register creates a new user in the database", async () => {
         const start = await users.find();
+        await auth.register(input);
+        const result = await users.find();
+
+        expect(result.length).toBe(start.length + 1);
     })
 })
