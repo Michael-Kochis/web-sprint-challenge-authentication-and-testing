@@ -1,7 +1,8 @@
 const router = require('express').Router();
+const users = require('../users/user-model');
 
-router.post('/register', (req, res) => {
-  res.end('implement register, please!');
+router.post('/register', (req, res, next) => {
+  //res.end('implement register, please!');
   /*
     IMPLEMENT
     You are welcome to build additional middlewares to help with the endpoint's functionality.
@@ -27,6 +28,12 @@ router.post('/register', (req, res) => {
     4- On FAILED registration due to the `username` being taken,
       the response body should include a string exactly as follows: "username taken".
   */
+ const neoUser = req.body;
+
+  users.add(neoUser)
+      .then((resp) => {
+        res.status(201).json(resp);
+      }).catch(next);
 });
 
 router.post('/login', (req, res) => {

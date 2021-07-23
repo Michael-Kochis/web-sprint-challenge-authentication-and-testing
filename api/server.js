@@ -26,7 +26,10 @@ server.use('*', (req, res) => {
 
 server.use((err, req, res, next) => {
     const status = err.status || 500;
-    res.status(status).json({ message: "Error on server" });
+    res.status(status).json({ 
+        message: "Error on server",
+        err: err.message
+    });
 })
 
 module.exports = server;

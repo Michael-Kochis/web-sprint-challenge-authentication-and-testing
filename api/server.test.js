@@ -7,17 +7,17 @@ test('sanity', () => {
 })
 
 describe("Server tests", () => {
-  it("server exists and will run", () => {
+  it("[0] server exists and will run", () => {
     expect(server).toBeDefined();
   })
-  it("Endpoint GET / returns a server message", async ()=> {
+  it("[1] Endpoint GET / returns a server message", async ()=> {
     const res = await webprod(server).get('/');
     const answer = res.body;
 
     expect(answer).toBeTruthy();
     expect(answer).toMatchObject({ message: 'Welcome to the Dad Jokes server.'});
   })
-  it("Attempting to access an undefined endpoint gets a 404", async () => {
+  it("[2] Attempting to access an undefined endpoint gets a 404", async () => {
     const res = await webprod(server).get('/qwerty');
     const status = res.status;
     const answer = res.body;
