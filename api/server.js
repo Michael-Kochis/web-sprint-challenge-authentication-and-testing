@@ -24,4 +24,9 @@ server.use('*', (req, res) => {
     res.status(404).json({ message: "No such endpoint" })
 })
 
+server.use((err, req, res, next) => {
+    const status = err.status || 500;
+    res.status(status).json({ message: "Error on server" });
+})
+
 module.exports = server;
