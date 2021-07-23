@@ -21,8 +21,15 @@ const add = async (neoUser) => {
     return await findByID(id);
 }
 
+const remove = async (id) => {
+    return await db("users")
+        .where({id})
+        .del();
+}
+
 module.exports = {
     find,
     findByID,
-    add
+    add,
+    remove
 }

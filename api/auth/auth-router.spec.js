@@ -12,6 +12,9 @@ beforeEach( async () => {
     await db.seed.run();
 })
 
+afterAll( async () => {
+    await db.destroy()
+})
 
 describe("Auth router tests", () => {
     const input = {
@@ -24,6 +27,8 @@ describe("Auth router tests", () => {
             .send(input);
 
         expect(answer.status).not.toBe(404);
+
+        await response(server).post("/api/users/remove/1");
     })
     it("[2] register responds with the newly created user", async () => {
         const answer = await response(server).post("/api/auth/register")
