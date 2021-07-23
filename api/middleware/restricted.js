@@ -1,14 +1,20 @@
+const jwt = require('jsonwebtoken');
+const { TOKEN_SECRET } = require('../../config/secrets');
+
 module.exports = (req, res, next) => {
-  next();
-  /*
-    IMPLEMENT
+  const token = req.headers.authorization;
+  const secret = TOKEN_SECRET;
 
-    1- On valid token in the Authorization header, call next.
-
-    2- On missing token in the Authorization header,
-      the response body should include a string exactly as follows: "token required".
-
-    3- On invalid or expired token in the Authorization header,
-      the response body should include a string exactly as follows: "token invalid".
-  */
-};
+  if (token) {
+      jwt.verify(token, secret, (err, decoded) => {
+          if (err) {
+              res.status(401).json({ message: "auth token corrupted or expired"})
+          } else {
+              req.decoded = decoded;
+              next();
+          }
+      })
+  } else { 
+      res.status(401).json({ message: "improper or expired auth token"})
+  }
+}
