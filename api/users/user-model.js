@@ -12,6 +12,12 @@ const findByID = async (id) => {
         .first();
 }
 
+const findByUsername = async (username) => {
+    return await db("users")
+        .where({username})
+        .first();
+}
+
 const add = async (neoUser) => {
     const hash = bcrypt.hashSync(neoUser.password, 12);
     neoUser.password = hash;
@@ -30,6 +36,7 @@ const remove = async (id) => {
 module.exports = {
     find,
     findByID,
+    findByUsername,
     add,
     remove
 }
